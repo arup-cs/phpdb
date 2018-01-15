@@ -64,18 +64,43 @@ if ($conn->query($sql1) === TRUE) {
     echo "Error creating table: " . $conn->error;
 }
 
+/*
 $sql = "INSERT INTO Myuser (firstname, lastname, email)
-VALUES ('John', 'Doe', 'john@example.com')";
+VALUES ('Mita', 'Das', 'john@example.com')";
 
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
+*/
+
+/*
+
+//Running query from user input
+$stmt = $mysqli->prepare(
+  "SELECT * FROM Myuser WHERE firstname = ?");
+$stmt->bind_param( "s", $user); 
+// "ss' is a format string, each "s" means string
+$stmt->execute();
+
+$stmt->bind_result($col1, $col2);
+// then fetch and close the statement
 
 
+*/
+$sql = "select * from Myuser where firstname='$user' and lastname='Kumar'";
+echo $sql;
+$result = $conn->query($sql);
 
-
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+    }
+} else {
+    echo "0 results";
+}
 
 
 
