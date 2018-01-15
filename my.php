@@ -15,8 +15,8 @@ echo $user;
 
 
 $servername = "localhost";
-$username = "arupkumar";
-$password = "Arup_2018";
+$username = "root";
+$password = "West!2017!!!";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
@@ -25,16 +25,18 @@ $conn = new mysqli($servername, $username, $password);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "Connected successfully there";
+echo (" \nConnected successfully there \n ");
 
-//$sql = "CREATE DATABASE comdata";
-//if ($conn->query($sql) === TRUE) {
- //   	echo "Database created successfully";
-//	} 
+$sql = "CREATE DATABASE IF NOT EXISTS comdata";
+if ($conn->query($sql) === TRUE) {
+   	echo "Database created successfully";
+} else{
+	echo "Database already exists";
+}
 
-/*
+mysqli_select_db($conn, 'comdata');
 // Create database
-if(mysql_select_db('comdata',$conn)){
+/*if(mysql_select_db('comdata',$conn)){
 	echo "Database exists";
 }else{
 	echo "Database Does Not exist";
@@ -44,11 +46,45 @@ if(mysql_select_db('comdata',$conn)){
 	} else {
     	echo "Error creating database: "; //. $conn->error;
 	}
+}*/
+
+
+// create table
+$sql1 = "CREATE TABLE Myuser (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+firstname VARCHAR(30) NOT NULL,
+lastname VARCHAR(30) NOT NULL,
+email VARCHAR(50),
+reg_date TIMESTAMP
+)";
+
+if ($conn->query($sql1) === TRUE) {
+    echo "Table Myuser created successfully";
+} else {
+    echo "Error creating table: " . $conn->error;
 }
-*/
+
+$sql = "INSERT INTO Myuser (firstname, lastname, email)
+VALUES ('John', 'Doe', 'john@example.com')";
+
+if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+}
 
 
-echo "Skipped the create database";
+
+
+
+
+
+
+
+
+
+
+
 
 $conn->close();
 
